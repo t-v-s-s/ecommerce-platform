@@ -172,7 +172,7 @@ export default function Dashboard() {
                     ))}
                 </motion.div>
 
-                {/* Dynamic Section */}
+                {/* This is Dynamic Section */}
                 <motion.div
                     key={active}
                     initial={{ opacity: 0, y: 20 }}
