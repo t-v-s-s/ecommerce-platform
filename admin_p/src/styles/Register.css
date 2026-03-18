@@ -1,0 +1,96 @@
+/* Full-page container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    /* gradient background */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Card styling */
+.card {
+    background: #ffffff;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 350px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Title */
+.card h2 {
+    margin-bottom: 1.5rem;
+    color: #333333;
+}
+
+/* Input fields */
+.card input {
+    width: 100%;
+    padding: 0.8rem;
+    margin: 0.6rem 0;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+    outline: none;
+}
+
+/* Button */
+.btn {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 1.2rem;
+    border: none;
+    border-radius: 10px;
+    background: #4CAF50;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+    background: #45a049;
+    transform: scale(1.02);
+}
+
+/* Paragraph and link */
+.card p {
+    margin-top: 1.2rem;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.card p span {
+    color: #4CAF50;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 5px;
+    transition: color 0.3s ease;
+}
+
+.card p span:hover {
+    color: #388E3C;
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+    .card {
+        width: 90%;
+        padding: 2rem;
+    }
+}
