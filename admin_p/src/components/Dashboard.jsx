@@ -1,17 +1,35 @@
+import City from "../pages/Masters/city";
+import Area from "../pages/Masters/area";
+import PropertyType from "../pages/Masters/property_type";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Home, User, Settings, LogOut } from "lucide-react";
+import {
+    Home,
+    LogOut,
+    ChevronDown,
+    ChevronRight,
+    Building2,
+    MapPinned,
+    Map
+} from "lucide-react";
+
+
 
 export default function Dashboard() {
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [active, setActive] = useState("home");
+    const [masterOpen, setMasterOpen] = useState(false);
+    const [hovered, setHovered] = useState("");
 
     useEffect(() => {
         const storedUsername = localStorage.getItem("username");
-        if (storedUsername) setUsername(storedUsername);
-        else navigate("/login");
+        if (storedUsername) {
+            setUsername(storedUsername);
+        } else {
+            navigate("/login");
+        }
     }, [navigate]);
 
     const logout = () => {
@@ -19,20 +37,50 @@ export default function Dashboard() {
         navigate("/login");
     };
 
-    const menu = [
-        { name: "home", icon: <Home size={20} /> },
-        { name: "profile", icon: <User size={20} /> },
-        { name: "settings", icon: <Settings size={20} /> }
-    ];
+    const getMenuItemStyle = (name) => ({
+        display: "flex",
+        alignItems: "center",
+        gap: "10px",
+        padding: "12px",
+        borderRadius: "10px",
+        cursor: "pointer",
+        marginBottom: "10px",
+        transition: "0.3s",
+        background: hovered === name ? "#ffe8d6" : "transparent",
+        color: hovered === name ? "#f97316" : "#555"
+    });
+
+    const getSubMenuItemStyle = (name) => ({
+        display: "flex",
+        alignItems: "center",
+        gap: "10px",
+        padding: "10px 12px",
+        borderRadius: "10px",
+        cursor: "pointer",
+        marginBottom: "8px",
+        transition: "0.3s",
+        background:
+            active === name
+                ? "#fff3eb"
+                : hovered === name
+                    ? "#ffe8d6"
+                    : "transparent",
+        color:
+            active === name
+                ? "#f97316"
+                : hovered === name
+                    ? "#f97316"
+                    : "#555"
+    });
 
     return (
-        <div style={{
-            display: "flex",
-            height: "100vh",
-            background: "linear-gradient(to bottom right, #f3f4f6, #e5e7eb)"
-        }}>
-
-            {/* Sidebar */}
+        <div
+            style={{
+                display: "flex",
+                minHeight: "100vh",
+                background: "linear-gradient(to bottom right, #f3f4f6, #e5e7eb)"
+            }}
+        >
             <motion.div
                 initial={{ x: -200, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
@@ -49,69 +97,117 @@ export default function Dashboard() {
                 }}
             >
                 <div>
-                    <h2 style={{
-                        fontSize: "24px",
-                        fontWeight: "bold",
-                        color: "#f97316",
-                        marginBottom: "30px"
-                    }}>
-                        🚀 MyApp
+                    <h2
+                        style={{
+                            fontSize: "28px",
+                            fontWeight: "bold",
+                            color: "#f97316",
+                            marginBottom: "25px"
+                        }}
+                    >
+                        Dashboard
                     </h2>
 
-                    <ul style={{ listStyle: "none", padding: 0 }}>
-                        {menu.map((item) => (
-                            <li
-                                key={item.name}
-                                onClick={() => setActive(item.name)}
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: "10px",
-                                    padding: "12px",
-                                    borderRadius: "10px",
-                                    cursor: "pointer",
-                                    marginBottom: "10px",
-                                    transition: "0.3s",
-                                    background: active === item.name ? "#f97316" : "transparent",
-                                    color: active === item.name ? "#fff" : "#555"
-                                }}
+                    <p
+                        style={{
+                            fontSize: "20px",
+                            fontWeight: "bold",
+                            color: "#f97316",
+                            textTransform: "uppercase",
+                            marginBottom: "15px",
+                            letterSpacing: "1px"
+                        }}
+                    >
+                        Menu
+                    </p>
+
+                    <div
+                        onClick={() => setActive("home")}
+                        onMouseEnter={() => setHovered("home")}
+                        onMouseLeave={() => setHovered("")}
+                        style={getMenuItemStyle("home")}
+                    >
+                        <Home size={20} />
+                        <span>Home</span>
+                    </div>
+
+                    <div
+                        onClick={() => setMasterOpen(!masterOpen)}
+                        onMouseEnter={() => setHovered("master")}
+                        onMouseLeave={() => setHovered("")}
+                        style={{
+                            ...getMenuItemStyle("master"),
+                            justifyContent: "space-between"
+                        }}
+                    >
+                        <span style={{ fontWeight: "500" }}>Master</span>
+                        {masterOpen ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
+                    </div>
+
+                    {masterOpen && (
+                        <div style={{ marginLeft: "10px", marginTop: "5px" }}>
+                            <div
+                                onClick={() => setActive("property type")}
+                                onMouseEnter={() => setHovered("property type")}
+                                onMouseLeave={() => setHovered("")}
+                                style={getSubMenuItemStyle("property type")}
                             >
-                                {item.icon}
-                                <span style={{ textTransform: "capitalize" }}>
-                                    {item.name}
-                                </span>
-                            </li>
-                        ))}
-                    </ul>
+                                <Building2 size={18} />
+                                <span>Property Type</span>
+                            </div>
+
+                            <div
+                                onClick={() => setActive("city")}
+                                onMouseEnter={() => setHovered("city")}
+                                onMouseLeave={() => setHovered("")}
+                                style={getSubMenuItemStyle("city")}
+                            >
+                                <MapPinned size={18} />
+                                <span>City</span>
+                            </div>
+
+                            <div
+                                onClick={() => setActive("area")}
+                                onMouseEnter={() => setHovered("area")}
+                                onMouseLeave={() => setHovered("")}
+                                style={getSubMenuItemStyle("area")}
+                            >
+                                <Map size={18} />
+                                <span>Area</span>
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 <button
                     onClick={logout}
+                    onMouseEnter={() => setHovered("logout")}
+                    onMouseLeave={() => setHovered("")}
                     style={{
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         gap: "10px",
                         padding: "12px",
-                        background: "#ef4444",
+                        background: hovered === "logout" ? "#dc2626" : "#ef4444",
                         color: "#fff",
                         border: "none",
                         borderRadius: "10px",
-                        cursor: "pointer"
+                        cursor: "pointer",
+                        transition: "0.3s"
                     }}
                 >
                     <LogOut size={18} /> Logout
                 </button>
             </motion.div>
 
-            {/* Main Content */}
-            <div style={{
-                flex: 1,
-                padding: "20px",
-                overflowY: "auto"
-            }}>
-
-                {/* Navbar */}
+            <div
+                style={{
+                    flex: 1,
+                    padding: "20px",
+                    overflowY: "auto"
+                }}
+            >
                 <motion.div
                     initial={{ y: -40, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -128,76 +224,38 @@ export default function Dashboard() {
                     }}
                 >
                     <h2 style={{ fontSize: "20px", color: "#555" }}>
-                        Welcome, <span style={{ color: "#f97316", fontWeight: "bold" }}>
+                        Welcome,{" "}
+                        <span style={{ color: "#f97316", fontWeight: "bold" }}>
                             {username}
-                        </span> 👋
+                        </span>{" "}
+                        👋
                     </h2>
                 </motion.div>
 
-                {/* Cards */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    style={{
-                        display: "grid",
-                        gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-                        gap: "20px"
-                    }}
-                >
-                    {[
-                        { title: "Users", value: "1,245" },
-                        { title: "Revenue", value: "$12,340" },
-                        { title: "Performance", value: "89%" }
-                    ].map((card, i) => (
-                        <motion.div
-                            key={i}
-                            whileHover={{ scale: 1.05 }}
-                            style={{
-                                background: "rgba(255,255,255,0.8)",
-                                padding: "20px",
-                                borderRadius: "15px",
-                                boxShadow: "0 2px 10px rgba(0,0,0,0.1)"
-                            }}
-                        >
-                            <h3 style={{ color: "#555" }}>{card.title}</h3>
-                            <p style={{
-                                fontSize: "28px",
-                                fontWeight: "bold",
-                                color: "#f97316",
-                                marginTop: "10px"
-                            }}>
-                                {card.value}
-                            </p>
-                        </motion.div>
-                    ))}
-                </motion.div>
+                {active === "home" && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        style={{
+                            marginTop: "10px",
+                            background: "rgba(255,255,255,0.8)",
+                            padding: "20px",
+                            borderRadius: "15px",
+                            boxShadow: "0 2px 10px rgba(0,0,0,0.1)"
+                        }}
+                    >
+                        <h2 style={{ fontSize: "22px", color: "#555", fontWeight: "bold" }}>
+                            Welcome to Dashboard
+                        </h2>
+                        <p style={{ color: "#777", marginTop: "10px" }}>
+                            Select a master item from the left menu to view data.
+                        </p>
+                    </motion.div>
+                )}
 
-                {/* This is Dynamic Section */}
-                <motion.div
-                    key={active}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    style={{
-                        marginTop: "30px",
-                        background: "rgba(255,255,255,0.8)",
-                        padding: "20px",
-                        borderRadius: "15px",
-                        boxShadow: "0 2px 10px rgba(0,0,0,0.1)"
-                    }}
-                >
-                    <h2 style={{
-                        fontSize: "20px",
-                        fontWeight: "bold",
-                        color: "#555",
-                        textTransform: "capitalize"
-                    }}>
-                        {active} Section
-                    </h2>
-
-                    <p style={{ color: "#777", marginTop: "10px" }}>
-                        This is the {active} section content.
-                    </p>
-                </motion.div>
+                {active === "property type" && <PropertyType />}
+                {active === "city" && <City />}
+                {active === "area" && <Area />}
             </div>
         </div>
     );
