@@ -1,6 +1,8 @@
 import City from "../pages/Masters/city";
 import Area from "../pages/Masters/area";
 import PropertyType from "../pages/Masters/property_type";
+import Country from "../pages/Masters/country";
+import State from "../pages/Masters/state";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -175,6 +177,25 @@ export default function Dashboard() {
                                 <Map size={18} />
                                 <span>Area</span>
                             </div>
+                            <div
+                                onClick={() => setActive("country")}
+                                onMouseEnter={() => setHovered("country")}
+                                onMouseLeave={() => setHovered("")}
+                                style={getSubMenuItemStyle("country")}
+                            >
+                                <MapPinned size={18} />
+                                <span>Country</span>
+                            </div>
+
+                            <div
+                                onClick={() => setActive("state")}
+                                onMouseEnter={() => setHovered("state")}
+                                onMouseLeave={() => setHovered("")}
+                                style={getSubMenuItemStyle("state")}
+                            >
+                                <MapPinned size={18} />
+                                <span>State</span>
+                            </div>
                         </div>
                     )}
                 </div>
@@ -256,6 +277,8 @@ export default function Dashboard() {
                 {active === "property type" && <PropertyType />}
                 {active === "city" && <City />}
                 {active === "area" && <Area />}
+                {active === "country" && <Country />}
+                {active === "state" && <State />}
             </div>
         </div>
     );
