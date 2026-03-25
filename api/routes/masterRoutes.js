@@ -25,6 +25,22 @@ import {
     deleteArea
 } from "../controllers/Master/areaController.js";
 
+import {
+    getCountries,
+    getCountryById,
+    addCountry,
+    updateCountry,
+    deleteCountry
+} from "../controllers/Master/countryController.js";
+
+import {
+    getStates,
+    getStateById,
+    addState,
+    updateState,
+    deleteState,
+} from "../controllers/Master/stateController.js";
+
 const router = express.Router();
 
 // Property Type
@@ -47,5 +63,20 @@ router.get("/area/:id", getAreaById);
 router.post("/area", addArea);
 router.put("/area/:id", updateArea);
 router.delete("/area/:id", deleteArea);
+
+// Country
+router.get("/country", getCountries);
+router.get("/country/:id", getCountryById);
+router.post("/country", addCountry);
+router.put("/country/:id", updateCountry);
+router.delete("/country/:id", deleteCountry);
+
+// State
+router.get("/state", getStates);
+router.get("/state/:id", getStateById);
+router.post("/state", addState);
+router.put("/state/:id", updateState);
+router.delete("/state/:id", deleteState);
+
 
 export default router;
