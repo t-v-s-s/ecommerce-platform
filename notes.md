@@ -1,0 +1,47 @@
+CREATE TABLE Property_type(
+id SERIAL PRIMARY KEY,
+name VARCHAR(100) NOT NULL UNIQUE
+);
+CREATE TABLE City(
+   id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE
+);
+CREATE TABLE Area(
+ id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+city_id INT REFERENCES city(id) ON DELETE CASCADE
+)
+
+CREATE TABLE country (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE state (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+
+
+
+ALTER TABLE state
+ADD COLUMN country_id INT REFERENCES country(id) ON DELETE CASCADE;
+
+ALTER TABLE city
+ADD COLUMN state_id INT REFERENCES state(id) ON DELETE CASCADE;
+
+CREATE TABLE property (
+    id SERIAL PRIMARY KEY,
+    property_name VARCHAR(100),
+    country_id INT REFERENCES country(id),
+    state_id INT REFERENCES state(id),
+    city_id INT REFERENCES city(id),
+    area_id INT REFERENCES area(id)
+);
+
+
+DROP TABLE IF EXISTS property CASCADE;
+
+
+

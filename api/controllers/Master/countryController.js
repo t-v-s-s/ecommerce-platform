@@ -2,6 +2,7 @@ import pool from "../../config/db.js";
 
 // GET ALL COUNTRIES
 export const getCountries = async (req, res) => {
+    console.log("In getCountries")
     try {
         const result = await pool.query(
             "SELECT * FROM country ORDER BY id ASC"
@@ -15,6 +16,7 @@ export const getCountries = async (req, res) => {
 
 // GET COUNTRY BY ID
 export const getCountryById = async (req, res) => {
+    console.log("In getCountryById")
     try {
         const { id } = req.params;
         const result = await pool.query(
@@ -30,6 +32,7 @@ export const getCountryById = async (req, res) => {
 
 // ADD COUNTRY
 export const addCountry = async (req, res) => {
+    console.log("In addCountry")
     try {
         const { name } = req.body;
         const result = await pool.query(
@@ -45,6 +48,7 @@ export const addCountry = async (req, res) => {
 
 // UPDATE COUNTRY
 export const updateCountry = async (req, res) => {
+    console.log("In updateCountry")
     try {
         const { id } = req.params;
         const { name } = req.body;
@@ -63,6 +67,7 @@ export const updateCountry = async (req, res) => {
 
 // DELETE COUNTRY
 export const deleteCountry = async (req, res) => {
+    console.log("In deleteCountry")
     try {
         const { id } = req.params;
 

@@ -6,10 +6,10 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 /* ================= REGISTER ================= */
 export const registerUser = async (req, res) => {
-  const { username, email, phone, password } = req.body;
+  const { username, email, phone, password, country_id } = req.body;
 
   // Validate all fields
-  if (!username || !email || !phone || !password) {
+  if (!username || !email || !phone || !password || !country_id) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
@@ -17,10 +17,10 @@ export const registerUser = async (req, res) => {
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Insert user into DB including phone
+    // Insert user into DB including phone and country_id
     await pool.query(
-      "INSERT INTO user_info (username, email, phone, password) VALUES ($1, $2, $3, $4)",
-      [username, email, phone, hashedPassword]
+      "INSERT INTO user_info (username, email, phone, password, country_id) VALUES ($1, $2, $3, $4, $5)",
+      [username, email, phone, hashedPassword, country_id]
     );
 
     res.json({ message: "Registration Successful ✅" });

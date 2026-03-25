@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/login.css";
-
-
 
 function Register() {
     const navigate = useNavigate();
@@ -10,8 +8,19 @@ function Register() {
         username: "",
         email: "",
         phone: "",
-        password: ""
+        password: "",
+        country_id: ""
     });
+
+    const [countries, setCountries] = useState([]);
+
+    // Fetch countries
+    useEffect(() => {
+        fetch("http://localhost:3000/api/master/country")
+            .then(res => res.json())
+            .then(data => setCountries(data))
+            .catch(err => console.error(err));
+    }, []);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,7 +44,6 @@ function Register() {
             }
         } catch (error) {
             console.error("Register Error:", error);
-            alert("Register Error: unable to connect server");
         }
     };
 
@@ -48,11 +56,25 @@ function Register() {
                 <input name="phone" type="tel" placeholder="Phone" onChange={handleChange} required />
                 <input name="password" type="password" placeholder="Password" onChange={handleChange} required />
 
+                {/* Country Dropdown */}
+                <select
+                    name="country_id"
+                    onChange={handleChange}
+                    required
+                >
+                    <option value="">Select Country</option>
+                    {countries.map((c) => (
+                        <option key={c.id} value={c.id}>
+                            {c.name}
+                        </option>
+                    ))}
+                </select>
+
                 <button className="btn" onClick={handleRegister}>Register</button>
 
                 <p>
                     Already have an account?
-                    <span style={{ color: "blue", cursor: "pointer" }} onClick={() => navigate("/login")}>
+                    <span onClick={() => navigate("/login")}>
                         {" "}Login
                     </span>
                 </p>
