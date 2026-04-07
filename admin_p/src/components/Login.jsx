@@ -19,9 +19,11 @@ function Login() {
             });
 
             const data = await response.json();
+            console.log("LOGIN RESPONSE:", data);
 
             if (response.ok) {
                 localStorage.setItem("username", data.username);
+                localStorage.setItem("token", data.token);
                 navigate("/dashboard");
             } else {
                 alert(data.message);

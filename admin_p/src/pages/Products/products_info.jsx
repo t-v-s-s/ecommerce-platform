@@ -14,10 +14,20 @@ export default function Product() {
         fetchProducts();
     }, []);
 
+    // ✅ FETCH PRODUCTS WITH TOKEN
     const fetchProducts = async () => {
-        console.log("fetchProducts called")
         try {
-            const res = await axios.get("http://localhost:3000/api/products");
+            const token = localStorage.getItem("token");
+
+            const res = await axios.get(
+                "http://localhost:3000/api/products",
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
             setProductData(res.data);
         } catch (error) {
             console.error("Error fetching products:", error);
@@ -32,38 +42,70 @@ export default function Product() {
 
     const handleEdit = (product) => {
         setEditId(product.id);
-        setProductName(product.name);
+        setProductName(product.product_name);
         setShowModal(true);
     };
 
+    // ✅ DELETE WITH TOKEN
     const handleDelete = async (id) => {
         if (!window.confirm("Delete this product?")) return;
 
         try {
-            await axios.delete(`http://localhost:3000/api/products/${id}`);
+            const token = localStorage.getItem("token");
+
+            await axios.delete(
+                `http://localhost:3000/api/products/${id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
             fetchProducts();
         } catch (error) {
             console.error("Error deleting product:", error);
         }
     };
 
+    // ✅ FIXED SAVE FUNCTION
     const saveProduct = async () => {
         try {
+            const token = localStorage.getItem("token");
+
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            };
+
             if (editId) {
-                await axios.put(`http://localhost:3000/api/products/${editId}`, {
-                    name: productName
-                });
+                await axios.put(
+                    `http://localhost:3000/api/products/${editId}`,
+                    {
+                        product_name: productName,
+                        price: 0
+                    },
+                    config
+                );
             } else {
-                await axios.post("http://localhost:3000/api/products", {
-                    name: productName
-                });
+                await axios.post(
+                    "http://localhost:3000/api/products",
+                    {
+                        product_name: productName,
+                        price: 0
+                    },
+                    config
+                );
             }
 
+            // ✅ RESET + REFRESH
             setShowModal(false);
             setProductName("");
             setEditId(null);
             fetchProducts();
 
+            // ✅ POPUP
             setShowPopup(true);
             setTimeout(() => setShowPopup(false), 2000);
 

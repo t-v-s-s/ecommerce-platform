@@ -4,10 +4,14 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 export const verifyToken = (req, res, next) => {
     console.log("verifyToken called")
-    const token = req.headers.authorization;
+    let token = req.headers.authorization;
 
     if (!token) {
         return res.status(403).json({ message: "No token ❌" });
+    }
+
+    if (token.startsWith("Bearer ")) {
+        token = token.slice(7, token.length);
     }
 
     try {
