@@ -3,7 +3,7 @@ import express from "express";
 
 import {
     getUserInfo
-} from "../controllers/User/userController.js";
+} from "../api_admin_p/User/userController.js";
 
 const router = express.Router();
 

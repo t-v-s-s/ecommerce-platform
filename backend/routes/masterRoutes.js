@@ -7,7 +7,7 @@ import {
     addPropertyType,
     updatePropertyType,
     deletePropertyType
-} from "../controllers/Master/propertyTypeController.js";
+} from "../api_admin_p/Master/propertyTypeController.js";
 
 import {
     getCities,
@@ -16,7 +16,7 @@ import {
     addCity,
     updateCity,
     deleteCity
-} from "../controllers/Master/cityController.js";
+} from "../api_admin_p/Master/cityController.js";
 
 import {
     getAreas,
@@ -25,7 +25,7 @@ import {
     addArea,
     updateArea,
     deleteArea
-} from "../controllers/Master/areaController.js";
+} from "../api_admin_p/Master/areaController.js";
 
 import {
     getCountries,
@@ -33,7 +33,7 @@ import {
     addCountry,
     updateCountry,
     deleteCountry
-} from "../controllers/Master/countryController.js";
+} from "../api_admin_p/Master/countryController.js";
 
 import {
     getStates,
@@ -42,7 +42,7 @@ import {
     addState,
     updateState,
     deleteState,
-} from "../controllers/Master/stateController.js";
+} from "../api_admin_p/Master/stateController.js";
 
 const router = express.Router();
 

@@ -3,7 +3,7 @@ import {
 
   registerUser,
   loginUser
-} from "../controllers/authController.js";
+} from "../api_admin_p/authController.js";
 import { verifyToken } from "../middleware/authMiddleware.js";
 
 const router = express.Router();

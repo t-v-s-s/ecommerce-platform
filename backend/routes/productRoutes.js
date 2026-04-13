@@ -9,7 +9,7 @@ import {
   updateProduct,
   deleteProduct,
   getProductsByCategory
-} from "../controllers/Product/product_controller.js";
+} from "../api_admin_p/Product/product_controller.js";
 
 const router = express.Router();
 
