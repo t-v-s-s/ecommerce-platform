@@ -24,6 +24,7 @@ function Login() {
             if (response.ok) {
                 localStorage.setItem("username", data.username);
                 localStorage.setItem("token", data.token);
+                console.log(`data.username = ${data.username} data.role = ${data.role}`);
                 navigate("/dashboard");
             } else {
                 alert(data.message);

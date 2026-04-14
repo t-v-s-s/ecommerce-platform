@@ -6,22 +6,29 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 /* ================= REGISTER ================= */
 export const registerUser = async (req, res) => {
-  const { username, email, phone, password, country_id, state_id, city_id, area_id } = req.body;
+  let { username, email, phone, password, country_id, state_id, city_id, area_id } = req.body;
 
   // Validate all fields
-  if (!username || !email || !phone || !password || !country_id || !state_id || !city_id || !area_id) {
+  if (!username || !email || !phone || !password) {
     return res.status(400).json({ message: "All fields are required" });
   }
-
+  // customer by default, current admin will elevate this user to admin or seller role
+  const role = "customer";
   try {
+    // Convert empty string to NULL as below fields are optional
+    country_id = country_id || null;
+    state_id = state_id || null;
+    city_id = city_id || null;
+    area_id = area_id || null;;
+
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Insert user into DB including all new fields
     await pool.query(
-      "INSERT INTO user_info (username, email, phone, password, country_id, state_id, city_id, area_id) \
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
-      [username, email, phone, hashedPassword, country_id, state_id, city_id, area_id]
+      "INSERT INTO user_info (username, email, phone, password, role, country_id, state_id, city_id, area_id) \
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)",
+      [username, email, phone, hashedPassword, role, country_id, state_id, city_id, area_id]
     );
 
     res.json({ message: "Registration Successful ✅" });
@@ -61,7 +68,8 @@ export const loginUser = async (req, res) => {
     res.json({
       message: "Login Successful",
       token,
-      username: user.username
+      username: user.username,
+      role: user.role
     });
   } catch (error) {
     console.error(error);
