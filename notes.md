@@ -80,3 +80,18 @@ ALTER TABLE user_info ADD COLUMN city_id INTEGER REFERENCES city(id) ON DELETE S
 ALTER TABLE user_info ADD COLUMN area_id INTEGER REFERENCES area(id) ON DELETE SET NULL;
 
 
+admin_p : Admin Panel Frontend, api_admin_p
+Backend : Business Logic
+frontend: User Frontend, api_user_p
+
+# 2. Implementation User Panel Frontend
+ - [ ] 2.1. Backend
+    - [ ] 2.1.1. Database
+        - [ ] 2.1.1.1. Table design for user information (Mandatory: username, password, email, phone number, role. Optional: country_id, state_id, city_id, area_id)
+        - [x] 2.1.1.2. country_id, state_id, city_id, area_id
+    - [ ] 2.1.2. API, routes, functions
+        - [ ] 2.1.2.1. API design
+            - [ ] Register: /api/userp/register => routes_user_p/admin_authRoutes.js
+			- [ ] Login: /api/userp/login => routes_user_p/admin_authRoutes.js
+
+ - [ ] 2.2. Frontend
